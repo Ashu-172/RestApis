@@ -1,0 +1,161 @@
+examTypes:
+QUATERLY_EXAM = 1;
+HALF_YEARLY_EXAM = 2;
+YEARLY_EXAM = 3;
+
+===========================
+Structures:
+"StudentDataStore":{
+    "studentData":OBJECT<studentInfo>,
+    "Results":MAP<examType(Integer),examResult>
+}
+
+"ExamResult":{
+            "examType":NUMBER,
+            "totalMarks":NUMBER,
+            "sum":NUMBER,
+            "percentResult":NUMBER,
+            "resultStatus":STRING,
+            "resultDate":DATE
+            "subjectResult":MAP<subjectId(Integer),subjectResult>,
+        }
+
+"SubjectResult":{
+        "subId":NUMBER,
+        "subName":STRING,
+        "totalMarks":NUMBER,
+        "obtainedMarks":NUMBER,
+        "status":NUMBER
+    }
+
+"SubjectScore":{
+        "subId":NUMBER,
+        "totalMarks":NUMBER,
+        "obtainedMarks":NUMBER
+}
+
+"FailedResult":{
+    "subId":NUMBER,
+    "totalMarks":NUMBER,
+    "obtainedmarks":NUMBER,
+    "errorCode":NUMBER,
+    "description":STRING
+}
+
+"studentInfo":{
+        "enrollNo":NUMBER,
+        "name":STRING,
+        "mothersName":STRING,
+        "classId":NUMBER,
+        "className":STRING,
+        "sec":NUMBER,
+        "rollNo":NUMBER,
+        "dob":STRING,
+        "age":NUMBER
+    }
+
+"Response":{
+        "status":NUMBER,
+        "errorCode":NUMBER,
+        "description":STRING
+    }
+APIs:
+1. getStudent
+Request:
+{
+    "txnId":STRING,
+    "enrollNo":NUMBER
+}
+Response:
+{
+    "txnId":STRING,
+    "studentInfo":OBJECT<studentInfo>
+        
+    "response":{
+        "status":NUMBER,
+        "errorCode":NUMBER,
+        "description":STRING
+    }
+}
+2. getClassStudent
+Request:
+{
+    "txnId":STRING,
+    "class":NUMBER,
+}
+Response:
+{
+    "txnId":STRING
+    "class":NUMBER,
+    "totalStudents":NUMBER,
+    "students":LIST<studentInfo>
+    "response":{
+        "status":NUMBER,
+        "errorCode":NUMBER,
+        "description":STRING
+    }
+}
+
+3. AddStudent
+Request:
+{
+    "txnId":STRING,
+    "firstName":STRING,
+    "lastName":STRING,
+    "mothersName":STRING,
+    "class":NUMBER,
+    "sec":NUMBER,
+    "rollNo":NUMBER,
+    "dateOfBirth":STRING
+}
+Response:
+{
+    "txnId":STRING,
+    "totalStudents":NUMBER,
+    "response":{
+        "status":NUMBER,
+        "errorCode":NUMBER,
+        "description":STRING
+    }
+}
+
+4. InsertSubjectResult
+Request:
+{
+    "txnId":STRING,
+    "enrollNo":NUMBER,
+    "examType":NUMBER,
+    "result":[
+    {
+    "subjectId":NUMBER,
+    "totalMarks":NUMBER,
+    "obtainedMarks":NUMBER
+    }]
+}
+Response:
+{
+    "txnId":STRING,
+    "response":{
+        "status":NUMBER,
+        "errorCode":NUMBER,
+        "description":STRING
+    }
+}
+
+5. getStudentResult
+Request:
+{
+    "txnId":STRING,
+    "enrollNo":NUMBER
+}
+Response:
+{
+    "txnId":STRING,
+    "studentInfo":OBJECT<studentInfo>,
+    "results":List<ExamResult>,
+    "response":{
+        "status":NUMBER,
+        "errorCode":NUMBER,
+        "description":STRING
+    }
+}
